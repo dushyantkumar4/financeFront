@@ -1,17 +1,11 @@
-import React from "react";
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import { RouterProvider } from "react-router-dom";
+import { router } from "@/routes/route";
 
-const App: React.FC = () => {
+const App = () => {
   return (
-    <div className="bg-black w-full h-screen">
-      App
-      <Button
-        variant="outline"
-        className="border-green-500 rounded-md border-2 hover:bg-green-600 bg-gray-700 text-white"
-      >
-        Click
-      </Button>
+    <div className="bg-black">
+      <RouterProvider router={router} />
     </div>
   );
 };

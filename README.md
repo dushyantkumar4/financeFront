@@ -71,3 +71,16 @@ export default defineConfig([
   },
 ])
 ```
+Background: bg-gray-900
+Card: bg-gray-800
+Border: border-gray-700
+
+Text:
+- primary: text-white
+- secondary: text-gray-400
+
+Primary Color:
+- green-500
+
+Hover:
+- green-600
