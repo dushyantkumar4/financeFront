@@ -3,7 +3,7 @@
 
 const Sidebar = () => {
   return (
-    <div className="border-r-2 border-gray-500 ">
+    <div className="border-r-2 border-gray-500">
       
         Sidebar
     </div>

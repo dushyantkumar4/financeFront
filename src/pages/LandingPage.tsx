@@ -1,20 +1,25 @@
+import { Button } from "@/components/ui/button";
+import { ChevronsRight,ChartNoAxesCombined,IndianRupee   } from "lucide-react";
+
 const LandingPage = () => {
   return (
-    <div className="w-full">
+    <div className="flex justify-around items-center mt-20">
       {/* left section  */}
-      <div></div>
+      <div className="flex flex-col items-start gap-5">
+        <div className="text-white text-4xl">
+          Track your expenses  with <br />{" "}
+          <span className="text-green-500 flex items-center">Decent Expense<IndianRupee className="font-bold size-9"/></span>
+        </div>
+
+        <Button>
+          Explore More <ChevronsRight className="" />
+        </Button>
+        <p className="text-gray-300 flex ">You just live your life we are therefore manage your expenses&nbsp;<ChartNoAxesCombined/> </p>
+      </div>
+
       {/* right svg section  */}
       <div className="">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsxlink="http://www.w3.org/1999/xlink"
-          width="2000"
-          zoomAndPan="magnify"
-          viewBox="0 0 1500 1499.999933"
-          height="2000"
-          preserveAspectRatio="xMidYMid meet"
-          version="1.0"
-        ></svg>
+        <img src="lendingFinance.png" alt="" className="w-120" />
       </div>
     </div>
   );

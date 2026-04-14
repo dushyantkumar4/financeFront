@@ -3,9 +3,9 @@ import Navbar from "@/components/Navbar";
 
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="h-screen flex flex-col">
       <Navbar/>
-      <div className="w-full max-w-md">
+      <div className="w-full">
         <Outlet /> {/* Login or Signup render here */}
       </div>
     </div>
