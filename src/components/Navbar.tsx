@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+
 const Navbar = () => {
   return (
     <div className="px-2 py-1 flex justify-between bg-white/10 backdrop-blur-md fixed items-center z-50 top-0 rounded-lg w-full">
