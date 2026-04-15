@@ -1,19 +1,27 @@
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
+import AppSidebar from "@/components/Sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const AppLayout = () => {
   return (
-    <div className="flex h-screen overflow-hidden">
-        <Sidebar/>
-        <div className="flex flex-col">
-            <Navbar/>
-            <main className="flex-1 overflow-y-auto">
-                <Outlet/>
-            </main>
-        </div>
-    </div>
-  )
-}
+    <SidebarProvider>
+      <div className="flex h-screen overflow-hidden w-full">
+        {/* Sidebar */}
+        <AppSidebar />
 
-export default AppLayout
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 min-w-0">
+          {/* Navbar */}
+          <Navbar />
+          {/* Page Content */}
+          <main className="flex-1 overflow-y-auto p-4">
+            <Outlet />
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
+  );
+};
+
+export default AppLayout;

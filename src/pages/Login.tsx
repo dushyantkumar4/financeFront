@@ -9,11 +9,11 @@ import { Input } from "@/components/ui/input";
 
 const Login = () => {
   return (
-    <div className="flex justify-between p-0 items-center w-full">
+    <div className="flex justify-between p-0 items-center">
       <div className="">
-        <img src="loginImg.png" className="" alt="" />
+        <img src="loginImg.png" className="size-100" alt="" />
       </div>
-      <div className="">
+      
         <FieldGroup className="text-green-500 ">
           <Field>
             <FieldLabel htmlFor="fieldgroup-email">Email</FieldLabel>
@@ -37,13 +37,13 @@ const Login = () => {
           </Field>
           {/* button secrion  */}
           <Field orientation="horizontal">
-            <Button type="reset" variant="outline">
+            <Button type="reset" >
               Reset
             </Button>
             <Button type="submit">Submit</Button>
           </Field>
         </FieldGroup>
-      </div>
+      
     </div>
   );
 };

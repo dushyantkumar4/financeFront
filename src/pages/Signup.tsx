@@ -9,7 +9,10 @@ import { Input } from "@/components/ui/input";
 
 const Signup = () => {
   return (
-    <div className="text-green-500">
+    <div className="text-green-500 flex justify-between p-0 items-center">
+      <div className="w-100">
+        <img src="loginImg.png" className="" alt="" />
+      </div>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="form-name">Name</FieldLabel>
@@ -43,9 +46,7 @@ const Signup = () => {
         </Field>
         {/* button secrion  */}
         <Field orientation="horizontal">
-          <Button type="reset" variant="outline">
-            Reset
-          </Button>
+          <Button type="reset">Reset</Button>
           <Button type="submit">Submit</Button>
         </Field>
       </FieldGroup>
