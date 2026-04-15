@@ -13,7 +13,7 @@ const AppLayout = () => {
         {/* Main Content */}
         <div className="flex flex-col flex-1 min-w-0">
           {/* Navbar */}
-          <Navbar />
+          <Navbar showSidebarTrigger />
           {/* Page Content */}
           <main className="flex-1 overflow-y-auto p-4">
             <Outlet />
