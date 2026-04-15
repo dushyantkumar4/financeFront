@@ -2,26 +2,27 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useMyContext } from "@/hooks/useMyContext";
-import { SidebarTrigger } from "./ui/sidebar";
+import { SidebarTrigger, useSidebar } from "./ui/sidebar";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { theme, setTheme } = useMyContext();
 
+  const sidebar = useSidebar();
+
   const toggleTheme = () => {
     setTheme(!theme);
   };
-  const navLinks = [
-    { name: "About", href: "#" },
-  ];
+  const navLinks = [{ name: "About", href: "#" }];
 
   return (
-    <nav className="fixed top-0 right-0 left-50 w-auto z-50 bg-white/10 backdrop-blur-md border-b border-white/20 rounded">
+    <nav className="fixed top-0 z-50 bg-white/10 backdrop-blur-md  rounded-lg">
       <div className="flex items-center justify-between px-4 py-2">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <SidebarTrigger className="text-green-500"/>
+          {sidebar && <SidebarTrigger className="text-green-500" />}
+
           <img
             src="financeLogo.png"
             className="size-10 rounded-full shadow-lg"

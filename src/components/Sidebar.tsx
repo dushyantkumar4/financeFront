@@ -8,42 +8,51 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarFooter,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { Info, LayoutDashboard, CircleUser, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const AppSidebar = () => {
   return (
-    <Sidebar collapsible="icon" className="border-r">
+    <Sidebar collapsible="icon" variant="floating" className="overflow-hidden!">
       {/* Header */}
-      <SidebarHeader className="font-bold px-4 py-2">
-        <div className="flex items-center gap-2">
-          <CircleUser />
-          <NavLink to="/me">Profile</NavLink>
-        </div>
+      <SidebarHeader className="font-bold bg-green-100 rounded-lg">
+        <SidebarMenuButton asChild>
+          <NavLink to="/me" className="text-green-500">
+            <CircleUser /> <span>Profile</span>{" "}
+          </NavLink>
+        </SidebarMenuButton>
       </SidebarHeader>
 
       {/* Content */}
-      <SidebarContent>
+      <SidebarContent className="bg-green-100">
         <SidebarGroup>
           <SidebarMenu className="flex flex-col gap-3">
-            <SidebarMenuItem className="flex items-center gap-2">
-              <LayoutDashboard />
-              <NavLink to="/dashboard">Dashboard</NavLink>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <NavLink to="/dashboard" className="text-green-500">
+                  <LayoutDashboard /> <span>Dashboard</span>
+                </NavLink>
+              </SidebarMenuButton>
             </SidebarMenuItem>
-
-            <SidebarMenuItem className="flex items-center  gap-2">
-              <Info />
-              <NavLink to="/about">About</NavLink>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <NavLink to="/about" className="text-green-500">
+                  <Info /> <span>About</span>
+                </NavLink>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-
-      <SidebarFooter>
-        <div className="flex items-center gap-2">
-          <LogOut /> <span>LogOut</span>
-        </div>
+      {/* logout  */}
+      <SidebarFooter className="bg-green-100 rounded-lg">
+        <SidebarMenuButton asChild>
+          <div className="text-red-500 cursor-pointer">
+            <LogOut /> <span>LogOut</span>
+          </div>
+        </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>
   );

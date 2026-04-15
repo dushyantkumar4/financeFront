@@ -5,6 +5,7 @@ import LandingPage from "@/pages/LandingPage";
 import Dashboard from "@/pages/Dashboard";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
+import About from "@/pages/About";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,8 @@ export const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           { path: "dashboard", element: <Dashboard /> },
-          { path: "profile", element: <div className="p-4">Profile Page</div> },
+          { path: "me", element: <div className="p-4">Profile Page</div> },
+          { path: "about", element: <About /> },
         ],
       },
     ],
