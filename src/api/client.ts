@@ -4,16 +4,10 @@ export const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
 
-export const attachTokenInterceptor = (
-  getToken: () => Promise<string | null>,
-) => {
-  api.interceptors.request.use(async (config) => {
-    const token = await getToken();
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  });
-};
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
