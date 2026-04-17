@@ -10,10 +10,9 @@ type Props = {
 };
 
 const MyContextProvider = ({ children }: Props) => {
-  const [theme, setTheme] = useState<boolean>(true);
+  const [theme, setTheme] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
-
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -22,7 +21,7 @@ const MyContextProvider = ({ children }: Props) => {
   };
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await api.get("/me");
+      const res = await api.get("/api/me");
       setUser(res.data);
     };
 

@@ -12,12 +12,14 @@ import {
 } from "@/components/ui/sidebar";
 import { Info, LayoutDashboard, CircleUser, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useMyContext } from "@/hooks/useMyContext";
 
 const AppSidebar = () => {
+  const { logout } = useMyContext();
   return (
-    <Sidebar collapsible="icon" variant="floating" className="overflow-hidden!">
+    <Sidebar collapsible="icon" variant="floating" className="">
       {/* Header */}
-      <SidebarHeader className="font-bold bg-green-100 rounded-lg">
+      <SidebarHeader className="font-bold bg-green-50 rounded-lg">
         <SidebarMenuButton asChild>
           <NavLink to="/me" className="text-green-500">
             <CircleUser /> <span>Profile</span>{" "}
@@ -26,7 +28,7 @@ const AppSidebar = () => {
       </SidebarHeader>
 
       {/* Content */}
-      <SidebarContent className="bg-green-100">
+      <SidebarContent className="bg-green-50">
         <SidebarGroup>
           <SidebarMenu className="flex flex-col gap-3">
             <SidebarMenuItem>
@@ -47,9 +49,9 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       {/* logout  */}
-      <SidebarFooter className="bg-green-100 rounded-lg">
+      <SidebarFooter className="bg-green-50 rounded-lg">
         <SidebarMenuButton asChild>
-          <div className="text-red-500 cursor-pointer">
+          <div className="text-red-500 cursor-pointer" onClick={() => logout()}>
             <LogOut /> <span>LogOut</span>
           </div>
         </SidebarMenuButton>

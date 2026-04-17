@@ -5,6 +5,7 @@ import LandingPage from "@/pages/LandingPage";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Signup from "@/pages/Signup";
 import About from "@/pages/About";
+import Login from "@/pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ export const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
           { index: true, element: <LandingPage /> },
-          { path: "auth", element: <Signup /> },
+          { path: "/register", element: <Signup /> },
+          { path: "/login", element: <Login /> },
         ],
       },
       {

@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { ChevronsRight, ChartNoAxesCombined, IndianRupee } from "lucide-react";
+import { useMyContext } from "@/hooks/useMyContext";
 
 const LandingPage = () => {
+  const {theme} = useMyContext();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       {/* left section  */}
       <div className="flex items-center justify-center p-6 order-2 md:order-1">
         <div className="flex flex-col items-start gap-5">
-          <div className="text-gray-100 text-4xl font-bold">
+          <div className={`${theme?"text-green-900":"text-white"} text-4xl font-bold`}>
             Track your expenses with <br />
             <span className="text-green-500 flex items-center">
               Decent Expense

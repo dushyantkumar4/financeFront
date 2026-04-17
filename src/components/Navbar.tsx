@@ -4,6 +4,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { useMyContext } from "@/hooks/useMyContext";
 import { SidebarTrigger } from "./ui/sidebar";
 import { useNavigate } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarBadge } from "@/components/ui/avatar";
 
 type NavbarProps = {
   showSidebarTrigger?: boolean;
@@ -12,7 +13,7 @@ type NavbarProps = {
 const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { theme, setTheme } = useMyContext();
+  const { theme, setTheme, user } = useMyContext();
   const navigate = useNavigate();
 
   const toggleTheme = () => {
@@ -21,18 +22,21 @@ const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
   const navLinks = [{ name: "About", href: "#" }];
 
   return (
-    <nav className=" sticky top-0 z-50 bg-white/10 backdrop-blur-md  rounded-lg">
+    <nav className={` sticky top-0 z-50 bg-white/10 backdrop-blur-md  rounded-lg shadow-sm`}>
       <div className="flex items-center justify-between px-4 py-2">
         {/* Logo */}
         <div className="flex items-center gap-3">
           {showSidebarTrigger && <SidebarTrigger className="text-green-500" />}
-          <div className="flex items-center gap-3" onClick={()=>navigate("/")}>
+          <div
+            className="flex items-center gap-3"
+            onClick={() => navigate("/")}
+          >
             <img
               src="financeLogo.png"
               className="size-10 rounded-full shadow-lg"
               alt="logo"
             />
-            <p className="text-white font-bold text-lg md:text-xl">
+            <p className={`${theme?"text-green-600":"text-white"} font-bold text-lg md:text-xl`}>
               Decent Expense
             </p>
           </div>
@@ -54,8 +58,14 @@ const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
           <button onClick={toggleTheme} className="text-green-500">
             {theme ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-
-          <Button onClick={() => navigate("/auth")}>Sign In</Button>
+          {user ? (
+            <Avatar>
+              <AvatarFallback>{user.name.slice(0, 2)}</AvatarFallback>
+              <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+            </Avatar>
+          ) : (
+            <Button onClick={() => navigate("/auth")}>Sign In</Button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}

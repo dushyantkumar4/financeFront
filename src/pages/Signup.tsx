@@ -13,7 +13,6 @@ import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
 const Signup = () => {
-  const [register, setRegister] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,21 +30,12 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const endpoint = register ? "/api/register" : "/api/login";
-      const payload = register
-        ? formData
-        : {
-            email: formData.email,
-            password: formData.password,
-          };
-      const res = await api.post(endpoint, payload);
+      const res = await api.post("/api/register", formData);
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       toast.success("success", {
-        description: register
-          ? "user created successfuly "
-          : "user loggedin successfuly",
+        description: "user created successfuly ",
       });
       navigate("/dashboard");
     } catch (err) {
@@ -68,7 +58,7 @@ const Signup = () => {
       {/* left section  */}
       <div className="flex items-center justify-center p-4">
         <img
-          src={register ? "signupimg.png" : "loginImg.png"}
+          src="signupimg.png"
           className="w-full max-w-sm object-contain"
           alt="auth"
         />
@@ -82,12 +72,12 @@ const Signup = () => {
         >
           <FieldGroup>
             <div className="text-gray-400 flex items-center">
-              Click here to &nbsp;
+              Already have an account? &nbsp;
               <button
-                onClick={() => setRegister(!register)}
+                onClick={() => navigate("/login")}
                 className="text-green-500 cursor-pointer"
               >
-                {register ? "Login" : "Register"}
+                " Click here to sign in"
               </button>{" "}
               &nbsp;
               <ArrowRight />
@@ -107,22 +97,20 @@ const Signup = () => {
                 We'll never share your details with anyone.
               </FieldDescription>
             </Field>
-            {register ? (
-              <Field className="text-green-500">
-                <FieldLabel htmlFor="form-name">Name</FieldLabel>
-                <Input
-                  id="form-name"
-                  type="text"
-                  placeholder="Enter your full name"
-                  required
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </Field>
-            ) : (
-              ""
-            )}
+
+            <Field className="text-green-500">
+              <FieldLabel htmlFor="form-name">Name</FieldLabel>
+              <Input
+                id="form-name"
+                type="text"
+                placeholder="Enter your full name"
+                required
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </Field>
+
             <Field className="text-green-500">
               <FieldLabel htmlFor="fieldgroup-password">Password</FieldLabel>
               <Input
