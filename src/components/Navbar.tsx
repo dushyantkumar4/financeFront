@@ -5,17 +5,15 @@ import { useMyContext } from "@/hooks/useMyContext";
 import { SidebarTrigger } from "./ui/sidebar";
 import { useNavigate } from "react-router-dom";
 
-
 type NavbarProps = {
   showSidebarTrigger?: boolean;
 };
-
 
 const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { theme, setTheme } = useMyContext();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setTheme(!theme);
@@ -27,16 +25,17 @@ const navigate = useNavigate();
       <div className="flex items-center justify-between px-4 py-2">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          {showSidebarTrigger  && <SidebarTrigger className="text-green-500" />}
-
-          <img
-            src="financeLogo.png"
-            className="size-10 rounded-full shadow-lg"
-            alt="logo"
-          />
-          <p className="text-white font-bold text-lg md:text-xl">
-            Decent Expense
-          </p>
+          {showSidebarTrigger && <SidebarTrigger className="text-green-500" />}
+          <div className="flex items-center gap-3" onClick={()=>navigate("/")}>
+            <img
+              src="financeLogo.png"
+              className="size-10 rounded-full shadow-lg"
+              alt="logo"
+            />
+            <p className="text-white font-bold text-lg md:text-xl">
+              Decent Expense
+            </p>
+          </div>
         </div>
 
         {/* Desktop Menu */}
@@ -56,7 +55,7 @@ const navigate = useNavigate();
             {theme ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <Button onClick={()=>navigate("/auth")}>Sign In</Button>
+          <Button onClick={() => navigate("/auth")}>Sign In</Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -90,7 +89,7 @@ const navigate = useNavigate();
           </div>
 
           <div>
-            <Button onClick={()=>navigate("/auth")}>Sign In</Button>
+            <Button onClick={() => navigate("/auth")}>Sign In</Button>
           </div>
         </div>
       )}

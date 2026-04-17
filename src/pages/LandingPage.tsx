@@ -5,7 +5,7 @@ const LandingPage = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
       {/* left section  */}
-      <div className="flex items-center justify-center p-6">
+      <div className="flex items-center justify-center p-6 order-2 md:order-1">
         <div className="flex flex-col items-start gap-5">
           <div className="text-gray-100 text-4xl font-bold">
             Track your expenses with <br />
@@ -25,7 +25,7 @@ const LandingPage = () => {
       </div>
 
       {/* right svg section  */}
-      <div className="flex items-center justify-center p-6">
+      <div className="flex items-center justify-center p-6 order-1 md:order-2">
         <img src="lendingFinance.png" alt="" className="w-120" />
       </div>
     </div>

@@ -32,8 +32,13 @@ const Signup = () => {
 
     try {
       const endpoint = register ? "/api/register" : "/api/login";
-
-      const res = await api.post(endpoint, formData);
+      const payload = register
+        ? formData
+        : {
+            email: formData.email,
+            password: formData.password,
+          };
+      const res = await api.post(endpoint, payload);
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -46,7 +51,7 @@ const Signup = () => {
     } catch (err) {
       toast.error("error", {
         position: "top-center",
-        description: err?.response?.data?.message || "Auth failed",
+        description: err?.response?.data?.errors || "Auth failed",
       });
     }
   };
@@ -87,32 +92,33 @@ const Signup = () => {
               &nbsp;
               <ArrowRight />
             </div>
+
             <Field className="text-green-500">
-              <FieldLabel htmlFor="form-name">Name</FieldLabel>
+              <FieldLabel htmlFor="fieldgroup-email">Email</FieldLabel>
               <Input
-                id="form-name"
-                type="text"
-                placeholder="Enter your full name"
-                required
-                name="name"
-                value={formData.name}
+                id="fieldgroup-email"
+                type="email"
+                placeholder="name@example.com"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
               />
+              <FieldDescription>
+                We'll never share your details with anyone.
+              </FieldDescription>
             </Field>
             {register ? (
               <Field className="text-green-500">
-                <FieldLabel htmlFor="fieldgroup-email">Email</FieldLabel>
+                <FieldLabel htmlFor="form-name">Name</FieldLabel>
                 <Input
-                  id="fieldgroup-email"
-                  type="email"
-                  placeholder="name@example.com"
-                  name="email"
-                  value={formData.email}
+                  id="form-name"
+                  type="text"
+                  placeholder="Enter your full name"
+                  required
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                 />
-                <FieldDescription>
-                  We'll never share your details with anyone.
-                </FieldDescription>
               </Field>
             ) : (
               ""
