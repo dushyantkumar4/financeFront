@@ -11,13 +11,25 @@ import { useNavigate } from "react-router-dom";
 import { api } from "@/api/client";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
+import { useMyContext } from "@/hooks/useMyContext";
+import { AxiosError } from "axios";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
+    role: "",
     email: "",
     password: "",
   });
+  const { setUser } = useMyContext();
 
   const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +38,7 @@ const Signup = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -34,20 +46,23 @@ const Signup = () => {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      toast.success("success", {
-        description: "user created successfuly ",
-      });
+      setUser(res.data.user);
       navigate("/dashboard");
+      toast.success("success", {position: "top-center",
+        description: "user created successfully",
+      });
     } catch (err) {
+      const error = err as AxiosError<{ errors?: string }>;
       toast.error("error", {
         position: "top-center",
-        description: err?.response?.data?.errors || "Auth failed",
+        description: error?.response?.data?.errors || "Auth failed",
       });
     }
   };
   const handleReset = async () => {
     setFormData({
       name: "",
+      role: "",
       email: "",
       password: "",
     });
@@ -97,7 +112,26 @@ const Signup = () => {
                 We'll never share your details with anyone.
               </FieldDescription>
             </Field>
-
+            <Field className="text-green-500">
+              <FieldLabel htmlFor="role-select">Role</FieldLabel>
+              <Select
+                value={formData.role}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, role: value }))
+                }
+                required
+              >
+                <SelectTrigger id="role-select">
+                  <SelectValue placeholder="Select a role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="Analyst">Analyst</SelectItem>
+                    <SelectItem value="Viewer">Viewer</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </Field>
             <Field className="text-green-500">
               <FieldLabel htmlFor="form-name">Name</FieldLabel>
               <Input

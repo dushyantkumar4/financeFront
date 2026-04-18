@@ -11,13 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { api } from "@/api/client";
 import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-
+import { AxiosError } from "axios";
+import { useMyContext } from "@/hooks/useMyContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+const {setUser} = useMyContext();
 
   const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +28,7 @@ const Login = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -34,14 +36,16 @@ const Login = () => {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      toast.success("success", {
+      setUser(res.data.user);
+      navigate("/dashboard");
+      toast.success("success", {position: "top-center",
         description: "user loggedin successfuly",
       });
-      navigate("/dashboard");
     } catch (err) {
+      const error = err as AxiosError<{ errors?: string }>;
       toast.error("error", {
         position: "top-center",
-        description: err?.response?.data?.errors || "Auth failed",
+        description: error?.response?.data?.errors || "Auth failed",
       });
     }
   };
@@ -80,7 +84,6 @@ const Login = () => {
               &nbsp;
               <ArrowRight />
             </div>
-
             <Field className="text-green-500">
               <FieldLabel htmlFor="fieldgroup-email">Email</FieldLabel>
               <Input
@@ -95,7 +98,6 @@ const Login = () => {
                 We'll never share your details with anyone.
               </FieldDescription>
             </Field>
-
             <Field className="text-green-500">
               <FieldLabel htmlFor="fieldgroup-password">Password</FieldLabel>
               <Input

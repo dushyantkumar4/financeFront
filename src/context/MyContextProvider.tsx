@@ -13,16 +13,30 @@ const MyContextProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
     toast.success("Logged out successfully");
   };
+
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await api.get("/api/me");
-      setUser(res.data);
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await api.get("/api/me");
+        setUser(res.data);
+      } catch (err) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUser();

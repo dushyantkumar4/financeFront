@@ -64,7 +64,7 @@ const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
               <AvatarBadge className="bg-green-600 dark:bg-green-800" />
             </Avatar>
           ) : (
-            <Button onClick={() => navigate("/auth")}>Sign In</Button>
+            <Button onClick={() => navigate("/login")}>Sign In</Button>
           )}
         </div>
 
@@ -99,7 +99,7 @@ const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
           </div>
 
           <div>
-            <Button onClick={() => navigate("/auth")}>Sign In</Button>
+            <Button onClick={() => navigate("/login")}>Sign In</Button>
           </div>
         </div>
       )}

@@ -7,11 +7,11 @@ import { Navigate } from "react-router-dom";
 const Dashboard = () => {
   const { user } = useMyContext();
   if (!user) {
-    return <Navigate to="/auth" />;
+    return <Navigate to="/login" />;
   }
 
   const roleMap = {
-    User: <UserDashboard />,
+    Viewer: <UserDashboard />,
     Analyst: <AnalystDashboard />,
     Admin: <AdminDashboard />,
   };
