@@ -34,7 +34,7 @@ const AnalystChart = ({ categoryTotals }: AnalystChartProps) => {
   );
 
   return (
-    <ChartContainer config={chartConfig} className="mx-auto max-w-md">
+    <ChartContainer config={chartConfig} className="max-w-md">
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent />} />
 

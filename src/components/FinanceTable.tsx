@@ -7,11 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { FinanceTable, AllData } from "@/types/financeTable";
+import type { Transaction } from "@/types/AnalystDashboard";
+interface RecentProp {
+  recent:Transaction[];
+}
 
-const FinanceTable = ({ recent }: AllData) => {
+
+const FinanceTable = ({ recent }:RecentProp) => {
   return (
-    <Table className="bg-green-100">
+    <Table className="bg-green-100 rounded-lg">
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
@@ -25,7 +29,7 @@ const FinanceTable = ({ recent }: AllData) => {
         {recent.map((invoice) => (
           <TableRow key={invoice._id}>
             <TableCell className="font-medium">
-              {invoice.date}
+              {invoice.date.split('T')[0]}
             </TableCell>
             <TableCell>{invoice.category}</TableCell>
             <TableCell>{invoice.type}</TableCell>

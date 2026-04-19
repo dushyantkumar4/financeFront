@@ -6,18 +6,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, Wallet, Landmark, HandCoins } from "lucide-react";
+import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import AnalystChart from "@/chart/Analyst.chart";
 import type { DashboardData } from "@/types/AnalystDashboard";
 import { useMyContext } from "@/hooks/useMyContext";
 import { api } from "@/api/client";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import Summery from "@/components/Summery";
 import FinanceTable from "@/components/FinanceTable";
 
 const AnalystDashboard = () => {
   const [data, setData] = useState<DashboardData | null>(null);
+  const [formData, setFormData] = useState({
+    category: "",
+    days: 30,
+  });
   const { user } = useMyContext();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
   useEffect(() => {
     const fetchDashboard = async () => {
       if (!user?._id) return;
@@ -32,59 +45,59 @@ const AnalystDashboard = () => {
     };
     fetchDashboard();
   }, [user]);
+
   return (
-    <div>
+    <div className="flex flex-col gap-5">
+      {data?.summery && <Summery summery={data.summery} />}
       <Card className="w-full bg-green-50">
         <CardHeader>
           <CardTitle className="font-bold text-2xl text-green-900">
-            Summary
+            Search Accrordinly
           </CardTitle>
+          <form action="" className="">
+            <FieldGroup className="flex flex-col md:flex-row">
+              <Field className="text-green-500">
+                <FieldLabel htmlFor="form-category">Category</FieldLabel>
+                <Input
+                  id="form-category"
+                  type="text"
+                  placeholder="Enter category"
+                  required
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                />
+              </Field>
+              <Field className="text-green-500">
+                <FieldLabel htmlFor="form-days">Days</FieldLabel>
+                <Input
+                  id="form-days"
+                  type="text"
+                  placeholder="Enter Days"
+                  required
+                  name="days"
+                  value={formData.days}
+                  onChange={handleChange}
+                />
+              </Field>
+            </FieldGroup>
+          </form>
           <CardAction>
             <Button>
-              Add <Plus />
+              <Search />
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <Card className="text-center shadow-lg bg-green-100">
-            <CardHeader className="flex flex-col items-center">
-              <Landmark />
-              <CardTitle>Tatal Amount</CardTitle>
-            </CardHeader>
-            <CardContent className="text-lg font-bold">
-              {data?.summery.totalIncome ?? 0}
-            </CardContent>
-          </Card>
-          <Card className="text-center shadow-lg bg-red-100">
-            <CardHeader className="flex flex-col items-center">
-              <HandCoins />
-              <CardTitle>Tatal Expense</CardTitle>
-            </CardHeader>
-            <CardContent className="text-lg font-bold">
-              {" "}
-              {data?.summery.totalExpense ?? 0}
-            </CardContent>
-          </Card>
-          <Card className="text-center shadow-lg bg-green-100">
-            <CardHeader className="flex flex-col items-center">
-              <Wallet className="" />
-              <CardTitle>Avl Balance</CardTitle>
-            </CardHeader>
-            <CardContent className="text-lg font-bold">
-              {data?.summery.netBalance ?? 0}
-            </CardContent>
+
+        <CardContent className="flex w-full">
+          <AnalystChart categoryTotals={data?.categoryTotals ?? []} />
+          <Card>
+            <CardHeader>Filtered Data</CardHeader>
+            <CardContent></CardContent>
           </Card>
         </CardContent>
       </Card>
-      <div>
-        {/* left section  */}
-        <div>
-          <Card></Card>
-          <AnalystChart categoryTotals={data?.categoryTotals ?? []} />
-        </div>
-        {/* right section  */}
-        <FinanceTable recent={data?.recent ?? []}/>
-      </div>
+      {data?.recent && <FinanceTable recent={data?.recent ?? []} />}
     </div>
   );
 };
