@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -15,13 +9,17 @@ import { api } from "@/api/client";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Summery from "@/components/Summery";
-import FinanceTable from "@/components/FinanceTable";
+import {
+  FinanceTable,
+  MonthlyTable,
+  CategoryTable,
+} from "@/components/FinanceTable";
 
 const AnalystDashboard = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [formData, setFormData] = useState({
     category: "",
-    days: 30,
+    days: 0,
   });
   const { user } = useMyContext();
 
@@ -52,7 +50,7 @@ const AnalystDashboard = () => {
       <Card className="w-full bg-green-50">
         <CardHeader>
           <CardTitle className="font-bold text-2xl text-green-900">
-            Search Accrordinly
+            Search Accordingly
           </CardTitle>
           <form action="" className="">
             <FieldGroup className="flex flex-col md:flex-row">
@@ -80,21 +78,22 @@ const AnalystDashboard = () => {
                   onChange={handleChange}
                 />
               </Field>
+              <div className="place-self-end">
+                <Button>
+                  Search <Search />
+                </Button>
+              </div>
             </FieldGroup>
           </form>
-          <CardAction>
-            <Button>
-              <Search />
-            </Button>
-          </CardAction>
         </CardHeader>
 
-        <CardContent className="flex w-full">
-          <AnalystChart categoryTotals={data?.categoryTotals ?? []} />
-          <Card>
-            <CardHeader>Filtered Data</CardHeader>
-            <CardContent></CardContent>
-          </Card>
+        <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-5">
+          <div className="place-self-center">
+            <AnalystChart categoryTotals={data?.categoryTotals ?? []} />
+          </div>
+          
+          <MonthlyTable monthlyTrends={data?.monthlyTrends ?? []} />
+          <CategoryTable categoryTotals={data?.categoryTotals ?? []} />
         </CardContent>
       </Card>
       {data?.recent && <FinanceTable recent={data?.recent ?? []} />}

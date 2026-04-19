@@ -15,7 +15,7 @@ interface AnalystChartProps {
 }
 
 const AnalystChart = ({ categoryTotals }: AnalystChartProps) => {
-    const COLORS = ["#22c55e", "#3b82f6", "#f59e0b", "#ef4444"];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042',"#22c55e", "#3b82f6", "#f59e0b", "#ef4444"];
 
   const chartData = categoryTotals.map((item, index) => ({
     name: item.category,
@@ -34,7 +34,7 @@ const AnalystChart = ({ categoryTotals }: AnalystChartProps) => {
   );
 
   return (
-    <ChartContainer config={chartConfig} className="max-w-md">
+    <ChartContainer config={chartConfig} className="w-md">
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent />} />
 
