@@ -34,7 +34,7 @@ export const FinanceTable = ({ recent }: RecentProp) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Table className=" rounded-lg text-green-900">
+        <Table className=" rounded-lg text-green-500">
           <TableCaption></TableCaption>
           <TableHeader>
             <TableRow>
@@ -70,7 +70,7 @@ export const FinanceTable = ({ recent }: RecentProp) => {
 
 export const CategoryTable = ({ categoryTotals }: CategoryProg) => {
   return (
-    <Table className="">
+    <Table className="text-green-500">
       <TableCaption>Category wise total</TableCaption>
       <TableHeader>
         <TableRow>
@@ -92,7 +92,7 @@ export const CategoryTable = ({ categoryTotals }: CategoryProg) => {
 
 export const MonthlyTable = ({ monthlyTrends }: MonthlyProp) => {
   return (
-    <Table className="">
+    <Table className="text-green-500">
       <TableCaption>Total of this month or given days by you</TableCaption>
       <TableHeader>
         <TableRow>

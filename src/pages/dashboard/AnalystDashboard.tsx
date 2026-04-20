@@ -35,7 +35,6 @@ const AnalystDashboard = () => {
 
       try {
         const res = await api.get(`/api/dashboard/${user._id}`);
-        console.log(res);
         setData(res.data);
       } catch (error) {
         console.error(error);
@@ -70,7 +69,7 @@ const AnalystDashboard = () => {
                 <FieldLabel htmlFor="form-days">Days</FieldLabel>
                 <Input
                   id="form-days"
-                  type="text"
+                  type="number"
                   placeholder="Enter Days"
                   required
                   name="days"
