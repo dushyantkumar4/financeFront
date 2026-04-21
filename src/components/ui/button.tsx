@@ -42,9 +42,9 @@ const buttonVariants = cva(
 )
 
 function Button({
-  className = "hover:bg-green-600 font-bold bg-green-500",
-  variant = "secondary",
-  size = "lg",
+  className,
+  variant = "default",
+  size = "default",
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
