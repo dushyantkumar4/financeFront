@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ChevronsRight, ChartNoAxesCombined, IndianRupee } from "lucide-react";
 import { useMyContext } from "@/hooks/useMyContext";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const {theme} = useMyContext();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
@@ -16,7 +18,7 @@ const LandingPage = () => {
               <IndianRupee className="font-bold size-9" />
             </span>
           </div>
-          <Button>
+          <Button onClick={()=>navigate("/dashboard")}>
             Explore More <ChevronsRight className="" />
           </Button>
           <p className="text-gray-400 flex ">

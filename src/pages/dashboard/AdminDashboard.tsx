@@ -32,7 +32,17 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { EditUser } from "@/components/EditUser";
 
 const AdminDashboard = () => {
   const [data, setData] = useState<User[] | null>(null);
@@ -86,9 +96,16 @@ const AdminDashboard = () => {
                       <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
                         role
                       </button>
-                      <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
-                        profile
-                      </button>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
+                            profile
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-sm">
+                          <EditUser userId={"userid"}/>
+                        </DialogContent>
+                      </Dialog>
                     </HoverCardContent>
                   </HoverCard>
                   <HoverCard openDelay={10} closeDelay={100}>

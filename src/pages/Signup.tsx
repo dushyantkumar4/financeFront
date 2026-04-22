@@ -81,7 +81,6 @@ const Signup = () => {
       {/* right section  */}
       <div className="flex items-center justify-center p-6 ">
         <form
-          action=""
           onSubmit={handleSubmit}
           className="w-full max-w-md space-y-4"
         >
