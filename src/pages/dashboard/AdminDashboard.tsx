@@ -32,17 +32,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { EditUser } from "@/components/EditUser";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { EditUser, EditUserRole } from "@/components/EditUser";
 
 const AdminDashboard = () => {
   const [data, setData] = useState<User[] | null>(null);
@@ -93,9 +84,17 @@ const AdminDashboard = () => {
                       <PencilLine className="size-4" />
                     </HoverCardTrigger>
                     <HoverCardContent className="flex gap-3 w-32 bg-green-50">
-                      <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
-                        role
-                      </button>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
+                            role
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-sm">
+                          <EditUserRole userId={item._id} />
+                        </DialogContent>
+                      </Dialog>
+
                       <Dialog>
                         <DialogTrigger asChild>
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
@@ -103,7 +102,7 @@ const AdminDashboard = () => {
                           </button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-sm">
-                          <EditUser userId={"userid"}/>
+                          <EditUser userId={item._id} />
                         </DialogContent>
                       </Dialog>
                     </HoverCardContent>

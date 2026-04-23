@@ -23,13 +23,13 @@ import type { AxiosError } from "axios";
 import { api } from "@/api/client";
 
 export const EditUser = (userId: string) => {
-  const [formData, SetFormData] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     password: "",
     status: "active | inactive",
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    SetFormData((prev) => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -89,7 +89,7 @@ export const EditUser = (userId: string) => {
             <Select
               value={formData.status}
               onValueChange={(value) =>
-                SetFormData((prev) => ({ ...prev, status: value }))
+                setFormData((prev) => ({ ...prev, status: value }))
               }
               required
             >
@@ -98,8 +98,70 @@ export const EditUser = (userId: string) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="Analyst">active</SelectItem>
-                  <SelectItem value="Viewer">inactive</SelectItem>
+                  <SelectItem value="active">active</SelectItem>
+                  <SelectItem value="inactive">inactive</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </Field>
+        </FieldGroup>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button>Cancel</Button>
+          </DialogClose>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </form>
+  );
+};
+
+export const EditUserRole = (userId: string) => {
+  const [roleVal, setRoleVal] = useState({ role: "" });
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      await api.post(`api/me/${userId}/role`, roleVal);
+      toast.success("success", {
+        position: "top-center",
+        description: "role updated",
+      });
+    } catch (err) {
+      const error = err as AxiosError<{ errors?: string }>;
+      toast.error("error", {
+        position: "top-center",
+        description: error?.response?.data?.errors || "unable to update role",
+      });
+    }
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <DialogContent className="sm:max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Edit Role</DialogTitle>
+          <DialogDescription>
+            Make changes to your Role here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
+        <FieldGroup>
+          <Field className="text-green-500">
+            <FieldLabel htmlFor="role-select">Status</FieldLabel>
+            <Select
+              value={roleVal.role}
+              onValueChange={(value) =>
+                setRoleVal((prev) => ({ ...prev, status: value }))
+              }
+              required
+            >
+              <SelectTrigger id="role-select">
+                <SelectValue placeholder="Select role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Analyst">Analyst</SelectItem>
+                  <SelectItem value="Viewer">Viewer</SelectItem>
+                  <SelectItem value="Admin">Admin</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
