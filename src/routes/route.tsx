@@ -7,6 +7,7 @@ import Signup from "@/pages/Signup";
 import About from "@/pages/About";
 import Login from "@/pages/Login";
 import Protected from "@/components/Protect";
+import Profile from "@/pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
               </Protected>
             ),
           },
-          { path: "me", element: <div className="p-4">Profile Page</div> },
+          { path: "me", element: <Profile/> },
           { path: "about", element: <About /> },
         ],
       },

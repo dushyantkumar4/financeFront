@@ -42,7 +42,7 @@ const buttonVariants = cva(
 );
 
 function Button({
-  className="bg-green-500 hover:bg-green-600 font-bold",
+  className = "bg-green-500 hover:bg-green-600 font-bold cursor-pointer",
   variant = "secondary",
   size = "lg",
   asChild = false,
