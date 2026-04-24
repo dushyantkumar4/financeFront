@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,9 +17,30 @@ import {
   ItemActions,
 } from "@/components/ui/item";
 import { useMyContext } from "@/hooks/useMyContext";
+import { api } from "@/api/client";
+import type { AxiosError } from "axios";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useMyContext();
+  const navigate = useNavigate();
+  const handleDelete = async (userId: string) => {
+    try {
+      await api.delete(`/api/me/${userId}`);
+      toast.success("sussess", {
+        position: "top-center",
+        description: "user deleted",
+      });
+      navigate("/");
+    } catch (err) {
+      const error = err as AxiosError<{ errors?: string }>;
+      toast.error("error", {
+        position: "top-center",
+        description: error?.response?.data?.errors || "can't delete the user",
+      });
+    }
+  };
 
   return (
     <Card className="w-full bg-green-50">
@@ -46,33 +66,25 @@ const Profile = () => {
         <Item variant="muted" className="bg-green-100">
           <ItemContent>
             <ItemTitle>Email</ItemTitle>
-            <ItemDescription>
-              {user?.email}
-            </ItemDescription>
+            <ItemDescription>{user?.email}</ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="muted" className="bg-green-100">
           <ItemContent>
             <ItemTitle>Role</ItemTitle>
-            <ItemDescription>
-              {user?.role}
-            </ItemDescription>
+            <ItemDescription>{user?.role}</ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="muted" className="bg-green-100">
           <ItemContent>
             <ItemTitle>Status</ItemTitle>
-            <ItemDescription>
-              {user?.status}
-            </ItemDescription>
+            <ItemDescription>{user?.status}</ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="muted" className="bg-green-100">
           <ItemContent>
             <ItemTitle>Registered on</ItemTitle>
-            <ItemDescription>
-              {user?.createdAt.split("T")[0]}
-            </ItemDescription>
+            <ItemDescription>{user?.createdAt.split("T")[0]}</ItemDescription>
           </ItemContent>
         </Item>
       </CardContent>
@@ -83,7 +95,14 @@ const Profile = () => {
             <ItemDescription>Your all Data will delete</ItemDescription>
           </ItemContent>
           <ItemActions>
-            <Button className="bg-red-500 hover:bg-red-600 text-white cursor-pointer shadow-sm">
+            <Button
+              className="bg-red-500 hover:bg-red-600 text-white cursor-pointer shadow-sm"
+              disabled={!user?._id}
+              onClick={() => {
+                if (!user?._id) return;
+                handleDelete(user?._id);
+              }}
+            >
               Delete
             </Button>
           </ItemActions>

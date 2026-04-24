@@ -10,7 +10,7 @@ import {
   SidebarFooter,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { Info, LayoutDashboard, CircleUser, LogOut } from "lucide-react";
+import { BadgeInfo , LayoutDashboard, CircleUser, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useMyContext } from "@/hooks/useMyContext";
 
@@ -41,7 +41,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <NavLink to="/about" className="text-green-500">
-                  <Info /> <span>About</span>
+                  <BadgeInfo  /> <span>About</span>
                 </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
