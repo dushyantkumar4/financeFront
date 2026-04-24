@@ -1,4 +1,4 @@
-import { Plus, Wallet, Landmark, HandCoins } from "lucide-react";
+import { Wallet, Landmark, HandCoins } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { Summary } from "@/types/AnalystDashboard";
-import { Button } from "./ui/button";
+import AddFinance from "./AddFinance";
 
 export interface SummeryType {
     summery:Summary;
@@ -20,10 +20,8 @@ const Summery = ({ summery }: SummeryType) => {
         <CardTitle className="font-bold text-2xl text-green-900">
           Summary
         </CardTitle>
-        <CardAction>
-          <Button>
-            Add <Plus />
-          </Button>
+        <CardAction className="">
+          <AddFinance/>
         </CardAction>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-5">

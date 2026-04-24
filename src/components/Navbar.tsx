@@ -19,7 +19,7 @@ const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
   const toggleTheme = () => {
     setTheme(!theme);
   };
-  const navLinks = [{ name: "About", href: "#" }];
+  const navLinks = [{ name: "About", href: "/about" }];
 
   return (
     <nav className={` sticky top-0 z-50 bg-white/10 backdrop-blur-md  rounded-lg shadow-sm`}>

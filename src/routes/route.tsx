@@ -42,11 +42,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "about",
-            element: (
-              <Protected>
-                <About />
-              </Protected>
-            ),
+            element: <About />,
           },
         ],
       },
