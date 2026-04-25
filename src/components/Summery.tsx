@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/card";
 import type { Summary } from "@/types/AnalystDashboard";
 import AddFinance from "./AddFinance";
-
+import { Button } from "./ui/button";
+import { Plus } from "lucide-react";
 export interface SummeryType {
     summery:Summary;
 }
@@ -21,7 +22,7 @@ const Summery = ({ summery }: SummeryType) => {
           Summary
         </CardTitle>
         <CardAction className="">
-          <AddFinance/>
+          <AddFinance mode="add" trigger={<Button>Add <Plus/></Button>}/>
         </CardAction>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-5">

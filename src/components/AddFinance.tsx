@@ -12,7 +12,6 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
 import { useState } from "react";
 import {
   Select,
@@ -25,15 +24,17 @@ import {
 import type { AxiosError } from "axios";
 import { toast } from "sonner";
 import { api } from "@/api/client";
+import type { FinanceFormDialogProps } from "@/types/financeFormType";
 
-const AddFinance = () => {
+const AddFinance = ({ mode, initialData, trigger }: FinanceFormDialogProps) => {
   const [formData, setFormData] = useState({
-    amount: 0,
-    type: "",
-    category: "",
-    date: "",
+    amount: initialData?.amount ?? 0,
+    type: initialData?.type ?? "",
+    category: initialData?.category ?? "",
+    date: initialData?.date ?? "",
   });
   const [open, setOpen] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -49,19 +50,16 @@ const AddFinance = () => {
     }
 
     try {
-      await api.post("/api/amount", formData);
-
-      toast.success("success", {
-        description: "finance added successfully",
-      });
-
-      setFormData({
-        amount: 0,
-        type: "",
-        category: "",
-        date: "",
-      });
-
+      if (mode === "add") {
+        await api.post("/api/amount", formData);
+      } else {
+        await api.put(`/api/amount/${initialData?._id}`, formData);
+      }
+      toast.success(
+        mode === "add"
+          ? "Finance added successfully"
+          : "Finance updated successfully",
+      );
       setOpen(false);
     } catch (err) {
       const error = err as AxiosError<{ errors?: string }>;
@@ -74,14 +72,12 @@ const AddFinance = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          Add <Plus />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-sm lg:max-w-lg bg-green-100">
         <DialogHeader>
-          <DialogTitle>Add Amount</DialogTitle>
+          <DialogTitle>
+            {mode === "add" ? "Add Amount" : "Update Amount"}
+          </DialogTitle>
           <DialogDescription>
             You can add amount as salary , expense both
           </DialogDescription>
@@ -150,7 +146,7 @@ const AddFinance = () => {
             <DialogClose asChild>
               <Button>Cancel</Button>
             </DialogClose>
-            <Button type="submit">Add</Button>
+            <Button type="submit">{mode === "add" ? "Add" : "Update"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

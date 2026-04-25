@@ -13,7 +13,9 @@ import type {
   CategoryTotal,
   MonthlyTrend,
 } from "@/types/AnalystDashboard";
-import { History,Trash2 ,PencilLine  } from "lucide-react";
+import { History, Trash2, PencilLine } from "lucide-react";
+import AddFinance from "./AddFinance";
+
 
 interface RecentProp {
   recent: Transaction[];
@@ -30,7 +32,8 @@ export const FinanceTable = ({ recent }: RecentProp) => {
     <Card className="bg-green-50">
       <CardHeader>
         <CardTitle className="font-bold text-2xl text-green-900 flex items-center">
-          Recent Activities &nbsp;<History/>
+          Recent Activities &nbsp;
+          <History />
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -43,7 +46,6 @@ export const FinanceTable = ({ recent }: RecentProp) => {
               <TableHead>Type</TableHead>
               <TableHead>Amount</TableHead>
               <TableHead className="text-right">Activities</TableHead>
-
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -56,8 +58,18 @@ export const FinanceTable = ({ recent }: RecentProp) => {
                 <TableCell>{invoice.type}</TableCell>
                 <TableCell>{invoice.amount}</TableCell>
                 <TableCell className="text-right flex items-center justify-end gap-3 ">
-                  <button><PencilLine  className="size-4"/></button>
-                  <button><Trash2 className="size-4 text-red-500"/></button>
+                  <AddFinance
+                    mode="edit"
+                    initialData={invoice}
+                    trigger={
+                      <button>
+                        <PencilLine className="size-4"/>
+                      </button>
+                    }
+                  />
+                  <button>
+                    <Trash2 className="size-4 text-red-500" />
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
