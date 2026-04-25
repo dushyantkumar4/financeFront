@@ -94,7 +94,6 @@ const AdminDashboard = () => {
                           <EditUserRole userId={item._id} />
                         </DialogContent>
                       </Dialog>
-
                       <Dialog>
                         <DialogTrigger asChild>
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">

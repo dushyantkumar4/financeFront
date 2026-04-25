@@ -1,3 +1,4 @@
+import AddFinance from "./AddFinance";
 import {
   Table,
   TableBody,
@@ -14,8 +15,19 @@ import type {
   MonthlyTrend,
 } from "@/types/AnalystDashboard";
 import { History, Trash2, PencilLine } from "lucide-react";
-import AddFinance from "./AddFinance";
-
+import { api } from "@/api/client";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useNavigate } from "react-router-dom";
 
 interface RecentProp {
   recent: Transaction[];
@@ -28,6 +40,16 @@ interface MonthlyProp {
 }
 
 export const FinanceTable = ({ recent }: RecentProp) => {
+  const navigate = useNavigate()
+  const deleteFinance = async (id: string) => {
+    try {
+      await api.delete(`/api/amount/${id}`);
+      toast.success("Deleted successfully", { position: "top-center" });
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error("Failed to delete", { position: "top-center" });
+    }
+  };
   return (
     <Card className="bg-green-50">
       <CardHeader>
@@ -63,13 +85,32 @@ export const FinanceTable = ({ recent }: RecentProp) => {
                     initialData={invoice}
                     trigger={
                       <button>
-                        <PencilLine className="size-4"/>
+                        <PencilLine className="size-4" />
                       </button>
                     }
                   />
-                  <button>
-                    <Trash2 className="size-4 text-red-500" />
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Trash2 className="size-4 text-red-500 cursor-pointer" />
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent className="bg-green-100">
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will delete forever
+                      </AlertDialogDescription>
+
+                      <AlertDialogFooter className="text-black">
+                        <AlertDialogCancel>No</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="text-black"
+                          onClick={() => deleteFinance(invoice._id)}
+                        >
+                          Yes
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}
