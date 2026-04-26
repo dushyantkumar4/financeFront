@@ -34,6 +34,17 @@ import {
 } from "@/components/ui/hover-card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { EditUser, EditUserRole } from "@/components/EditUser";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 const AdminDashboard = () => {
   const [data, setData] = useState<User[] | null>(null);
@@ -48,6 +59,15 @@ const AdminDashboard = () => {
     };
     fetchUsers();
   }, []);
+
+  const deleteUser = async (id: string) => {
+    try {
+      await api.delete(`/api/me/${id}`);
+      toast.success("User deleted successfully", { position: "top-center" });
+    } catch (err) {
+      toast.error("Failed to delete user", { position: "top-center" });
+    }
+  };
 
   return (
     <Card className="bg-green-50 text-green-500">
@@ -106,22 +126,28 @@ const AdminDashboard = () => {
                       </Dialog>
                     </HoverCardContent>
                   </HoverCard>
-                  <HoverCard openDelay={10} closeDelay={100}>
-                    <HoverCardTrigger asChild>
-                      <Trash2 className="size-4 text-red-500" />
-                    </HoverCardTrigger>
-                    <HoverCardContent className="flex flex-col gap-1 w-28 bg-green-50">
-                      <p>Are you sure ? </p>
-                      <div className="flex gap-3">
-                        <button className=" text-green-900 cursor-pointer">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Trash2 className="size-4 text-red-500 cursor-pointer" />
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent className="bg-green-100">
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will delete forever
+                      </AlertDialogDescription>
+
+                      <AlertDialogFooter className="text-black">
+                        <AlertDialogCancel>No</AlertDialogCancel>
+                        <AlertDialogAction
+                          className=""
+                          onClick={() => deleteUser(item._id)}
+                        >
                           Yes
-                        </button>
-                        <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
-                          No
-                        </button>
-                      </div>
-                    </HoverCardContent>
-                  </HoverCard>
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}

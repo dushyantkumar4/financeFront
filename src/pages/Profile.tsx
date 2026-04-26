@@ -21,6 +21,17 @@ import { api } from "@/api/client";
 import type { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Trash2 } from "lucide-react";
 
 const Profile = () => {
   const { user } = useMyContext();
@@ -30,7 +41,7 @@ const Profile = () => {
       await api.delete(`/api/me/${userId}`);
       toast.success("sussess", {
         position: "top-center",
-        description: "user deleted",
+        description: "User deleted successfuly",
       });
       navigate("/");
     } catch (err) {
@@ -95,16 +106,34 @@ const Profile = () => {
             <ItemDescription>Your all Data will delete</ItemDescription>
           </ItemContent>
           <ItemActions>
-            <Button
-              className="bg-red-500 hover:bg-red-600 text-white cursor-pointer shadow-sm"
-              disabled={!user?._id}
-              onClick={() => {
-                if (!user?._id) return;
-                handleDelete(user?._id);
-              }}
-            >
-              Delete
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button className="bg-red-500 hover:bg-red-600 text-white cursor-pointer shadow-sm">
+                  Delete
+                  <Trash2 className="size-4 cursor-pointer" />
+                </Button>
+              </AlertDialogTrigger>
+
+              <AlertDialogContent className="bg-green-100">
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will delete forever
+                </AlertDialogDescription>
+
+                <AlertDialogFooter className="text-black">
+                  <AlertDialogCancel>No</AlertDialogCancel>
+                  <AlertDialogAction
+                    className=""
+                    onClick={() => {
+                      if (!user?._id) return;
+                      handleDelete(user?._id);
+                    }}
+                  >
+                    Yes
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </ItemActions>
         </Item>
       </CardFooter>

@@ -4,6 +4,7 @@ import { MyContext } from "@/context/MyContext";
 import type { User } from "@/types/user.type";
 import { toast } from "sonner";
 import { api } from "@/api/client";
+import type { AxiosError } from "axios";
 
 type Props = {
   children: ReactNode;
