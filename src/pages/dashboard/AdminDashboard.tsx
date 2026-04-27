@@ -104,13 +104,13 @@ const AdminDashboard = () => {
                     </HoverCardTrigger>
                     <HoverCardContent className="flex gap-3 w-32 bg-green-50">
                       <EditUserRole
+                      initialData={item}
                         trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
                             role
                           </button>
                         }
                       />
-
                       <EditUser
                         trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
