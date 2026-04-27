@@ -32,7 +32,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { EditUser, EditUserRole } from "@/components/EditUser";
 import {
   AlertDialog,
@@ -104,26 +103,21 @@ const AdminDashboard = () => {
                       <PencilLine className="size-4" />
                     </HoverCardTrigger>
                     <HoverCardContent className="flex gap-3 w-32 bg-green-50">
-                      <Dialog>
-                        <DialogTrigger asChild>
+                      <EditUserRole
+                        trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
                             role
                           </button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-sm">
-                          <EditUserRole userId={item._id} />
-                        </DialogContent>
-                      </Dialog>
-                      <Dialog>
-                        <DialogTrigger asChild>
+                        }
+                      />
+
+                      <EditUser
+                        trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
-                            profile
+                            Profile
                           </button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-sm">
-                          <EditUser userId={item._id} />
-                        </DialogContent>
-                      </Dialog>
+                        }
+                      />
                     </HoverCardContent>
                   </HoverCard>
                   <AlertDialog>

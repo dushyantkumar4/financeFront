@@ -32,6 +32,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Trash2 } from "lucide-react";
+import { EditUser } from "@/components/EditUser";
 
 const Profile = () => {
   const { user } = useMyContext();
@@ -62,9 +63,13 @@ const Profile = () => {
         </CardTitle>
         <CardDescription>Here is your profile details</CardDescription>
         <CardAction>
-          <Button>
-            Edit <SquarePen />
-          </Button>
+          <EditUser
+            trigger={
+              <Button>
+                Edit <SquarePen />
+              </Button>
+            }
+          />
         </CardAction>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-2">
