@@ -145,7 +145,7 @@ export const EditUserRole = ({ initialData, trigger }: RoleFormProp) => {
     e.preventDefault();
 
     try {
-      await api.post(`api/me/${initialData?._id}/role`, roleVal);
+      await api.put(`api/me/${initialData?._id}/role`, roleVal);
       toast.success("success", {
         position: "top-center",
         description: "role updated",
@@ -173,7 +173,7 @@ export const EditUserRole = ({ initialData, trigger }: RoleFormProp) => {
     >
       <DialogTrigger asChild>{trigger}</DialogTrigger>
 
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm lg:max-w-lg bg-green-100">
         <DialogHeader>
           <DialogTitle>Edit Role</DialogTitle>
           <DialogDescription>
@@ -187,14 +187,14 @@ export const EditUserRole = ({ initialData, trigger }: RoleFormProp) => {
               <Select
                 value={roleVal.role}
                 onValueChange={(value) =>
-                  setRoleVal((prev) => ({ ...prev, status: value }))
+                  setRoleVal((prev) => ({ ...prev, role: value }))
                 }
                 required
               >
                 <SelectTrigger id="role-select">
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="text-green-900 bg-green-100">
                   <SelectGroup>
                     <SelectItem value="Analyst">Analyst</SelectItem>
                     <SelectItem value="Viewer">Viewer</SelectItem>

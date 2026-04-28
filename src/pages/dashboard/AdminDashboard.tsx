@@ -112,6 +112,7 @@ const AdminDashboard = () => {
                         }
                       />
                       <EditUser
+                      initialData={item}
                         trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
                             Profile
