@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -46,18 +46,18 @@ import {
 import { toast } from "sonner";
 
 const AdminDashboard = () => {
-  const [data, setData] = useState<User[] | null>(null);
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await api.get(`/api/users`);
-        setData(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchUsers();
+  const [data, setData] = useState<User[]>([]);
+  const fetchUsers = useCallback(async () => {
+    try {
+      const res = await api.get(`/api/users`);
+      setData(res.data);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const deleteUser = async (id: string) => {
     try {
@@ -104,7 +104,8 @@ const AdminDashboard = () => {
                     </HoverCardTrigger>
                     <HoverCardContent className="flex gap-3 w-32 bg-green-50">
                       <EditUserRole
-                      initialData={item}
+                        initialData={item}
+                        refetch={fetchUsers}
                         trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
                             role
@@ -112,7 +113,8 @@ const AdminDashboard = () => {
                         }
                       />
                       <EditUser
-                      initialData={item}
+                        initialData={item}
+                        refetch={fetchUsers}
                         trigger={
                           <button className="rounded-full bg-green-900 px-2 text-white cursor-pointer">
                             Profile

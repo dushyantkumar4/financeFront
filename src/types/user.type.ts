@@ -11,9 +11,11 @@ export interface User {
 export type UserFormDilogProp = {
   initialData?: User;
   trigger: React.ReactNode;
+  refetch?: () => void;
 };
 
 export type RoleFormProp = {
   trigger: React.ReactNode;
-  initialData?: User
+  initialData?: User;
+  refetch?: () => void;
 };

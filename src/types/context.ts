@@ -9,4 +9,5 @@ export type MyContextType = {
   user: User | null;
   setUser: Dispatch<SetStateAction<User | null>>;
   logout: () => void;
+  fetchUser :()=>void;
 };

@@ -4,7 +4,6 @@ import { MyContext } from "@/context/MyContext";
 import type { User } from "@/types/user.type";
 import { toast } from "sonner";
 import { api } from "@/api/client";
-import type { AxiosError } from "axios";
 
 type Props = {
   children: ReactNode;
@@ -22,24 +21,23 @@ const MyContextProvider = ({ children }: Props) => {
     toast.success("Logged out successfully");
   };
 
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+    try {
+      const res = await api.get("/api/me");
+      setUser(res.data);
+    } catch (err) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await api.get("/api/me");
-        setUser(res.data);
-      } catch (err) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUser();
   }, []);
 
@@ -51,6 +49,7 @@ const MyContextProvider = ({ children }: Props) => {
     user,
     setUser,
     logout,
+    fetchUser,
   };
   return (
     <MyContext.Provider value={providerValues}>{children}</MyContext.Provider>

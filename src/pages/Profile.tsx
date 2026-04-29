@@ -35,7 +35,7 @@ import { Trash2 } from "lucide-react";
 import { EditUser } from "@/components/EditUser";
 
 const Profile = () => {
-  const { user } = useMyContext();
+  const { user ,fetchUser} = useMyContext();
   const navigate = useNavigate();
   const handleDelete = async (userId: string) => {
     try {
@@ -64,6 +64,8 @@ const Profile = () => {
         <CardDescription>Here is your profile details</CardDescription>
         <CardAction>
           <EditUser
+            initialData={user}
+            refetch={fetchUser}
             trigger={
               <Button>
                 Edit <SquarePen />

@@ -25,10 +25,14 @@ import type { AxiosError } from "axios";
 import { api } from "@/api/client";
 import type { UserFormDilogProp, RoleFormProp } from "@/types/user.type";
 
-export const EditUser = ({ initialData, trigger }: UserFormDilogProp) => {
+export const EditUser = ({
+  initialData,
+  refetch,
+  trigger,
+}: UserFormDilogProp) => {
   const [formData, setFormData] = useState({
     name: initialData?.name ?? "",
-    password: initialData?.password ?? "",
+    password: "",
     status: initialData?.status ?? "",
   });
   const [open, setOpen] = useState(false);
@@ -42,11 +46,12 @@ export const EditUser = ({ initialData, trigger }: UserFormDilogProp) => {
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await api.post(`/api/me/${initialData?._id}`, formData);
+      await api.put(`/api/me/${initialData?._id}`, formData);
       toast.success("success", {
         position: "top-center",
         description: "user updated successfuly",
       });
+      refetch?.();
       setOpen(false);
     } catch (err) {
       const error = err as AxiosError<{ errors?: string }>;
@@ -138,18 +143,24 @@ export const EditUser = ({ initialData, trigger }: UserFormDilogProp) => {
   );
 };
 
-export const EditUserRole = ({ initialData, trigger }: RoleFormProp) => {
-  const [roleVal, setRoleVal] = useState({ role:initialData?.role ?? "", });
+export const EditUserRole = ({
+  initialData,
+  refetch,
+  trigger,
+}: RoleFormProp) => {
+  const [roleVal, setRoleVal] = useState({ role: initialData?.role ?? "" });
   const [open, setOpen] = useState(false);
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      await api.put(`api/me/${initialData?._id}/role`, roleVal);
+      await api.put(`/api/me/${initialData?._id}/role`, roleVal);
       toast.success("success", {
         position: "top-center",
         description: "role updated",
       });
+      refetch?.();
+      setOpen(false);
     } catch (err) {
       const error = err as AxiosError<{ errors?: string }>;
       toast.error("error", {
@@ -166,7 +177,7 @@ export const EditUserRole = ({ initialData, trigger }: RoleFormProp) => {
 
         if (isOpen && initialData) {
           setRoleVal({
-            role:initialData.role ?? "",
+            role: initialData.role ?? "",
           });
         }
       }}
