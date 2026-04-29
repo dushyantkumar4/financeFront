@@ -19,27 +19,34 @@ const AnalystDashboard = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [formData, setFormData] = useState({
     category: "",
-    days: 0,
+    days: 30,
   });
   const { user } = useMyContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: name === "days" ? Number(value) : value,
     }));
   };
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      if (!user?._id) return;
 
-      try {
-        const res = await api.get(`/api/dashboard/${user._id}`);
-        setData(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchDashboard = async (e?: React.SubmitEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+
+    if (!user?._id) return;
+
+    try {
+      const res = await api.get(
+        `/api/dashboard/${user._id}?category=${formData.category}&days=${formData.days}`,
+      );
+
+      setData(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
     fetchDashboard();
   }, [user]);
 
@@ -51,7 +58,7 @@ const AnalystDashboard = () => {
           <CardTitle className="font-bold text-2xl text-green-900">
             Search Accordingly
           </CardTitle>
-          <form action="" className="">
+          <form action="" className="" onSubmit={fetchDashboard}>
             <FieldGroup className="flex flex-col md:flex-row">
               <Field className="text-green-500">
                 <FieldLabel htmlFor="form-category">Category</FieldLabel>
@@ -59,7 +66,6 @@ const AnalystDashboard = () => {
                   id="form-category"
                   type="text"
                   placeholder="Enter category"
-                  required
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
@@ -90,7 +96,7 @@ const AnalystDashboard = () => {
           <div className="place-self-center">
             <AnalystChart categoryTotals={data?.categoryTotals ?? []} />
           </div>
-          
+
           <MonthlyTable monthlyTrends={data?.monthlyTrends ?? []} />
           <CategoryTable categoryTotals={data?.categoryTotals ?? []} />
         </CardContent>
