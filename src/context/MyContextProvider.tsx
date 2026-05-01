@@ -37,6 +37,7 @@ const MyContextProvider = ({ children }: Props) => {
       setLoading(false);
     }
   };
+  
   useEffect(() => {
     fetchUser();
   }, []);
