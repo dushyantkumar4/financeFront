@@ -60,7 +60,7 @@ const Navbar = ({ showSidebarTrigger = false }: NavbarProps) => {
           </button>
           {user ? (
             <Avatar>
-              <AvatarFallback>{user.name.slice(0, 2)}</AvatarFallback>
+              <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
               <AvatarBadge className="bg-green-600 dark:bg-green-800" />
             </Avatar>
           ) : (

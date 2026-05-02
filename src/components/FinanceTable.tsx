@@ -31,7 +31,7 @@ import { useNavigate } from "react-router-dom";
 
 interface RecentProp {
   recent: Transaction[];
-  refetch: () => void;
+  refetch?: () => void;
 }
 interface CategoryProg {
   categoryTotals: CategoryTotal[];
@@ -84,6 +84,7 @@ export const FinanceTable = ({ recent,refetch }: RecentProp) => {
                 <TableCell className="text-right flex items-center justify-end gap-3 ">
                   <AddFinance
                     mode="edit"
+                    refetch={refetch}
                     initialData={invoice}
                     trigger={
                       <button>

@@ -34,6 +34,7 @@ import {
 import { Trash2 } from "lucide-react";
 import { EditUser } from "@/components/EditUser";
 
+
 const Profile = () => {
   const { user ,fetchUser} = useMyContext();
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const Profile = () => {
         <CardDescription>Here is your profile details</CardDescription>
         <CardAction>
           <EditUser
-            initialData={user}
+            initialData={user ?? undefined}
             refetch={fetchUser}
             trigger={
               <Button>
@@ -102,7 +103,7 @@ const Profile = () => {
         <Item variant="muted" className="bg-green-100">
           <ItemContent>
             <ItemTitle>Registered on</ItemTitle>
-            <ItemDescription>{user?.createdAt.split("T")[0]}</ItemDescription>
+            <ItemDescription>{user?.createdAt?.split("T")[0]}</ItemDescription>
           </ItemContent>
         </Item>
       </CardContent>
