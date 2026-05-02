@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import AnalystChart from "@/chart/Analyst.chart";
 import type { DashboardData } from "@/types/AnalystDashboard";
 import { useMyContext } from "@/hooks/useMyContext";
@@ -31,28 +31,27 @@ const AnalystDashboard = () => {
     }));
   };
 
-  const fetchDashboard = async (e?: React.SubmitEvent<HTMLFormElement>) => {
-    e?.preventDefault();
-
+  const fetchDashboard = useCallback(async () => {
     if (!user?._id) return;
-
     try {
       const res = await api.get(
         `/api/dashboard/${user._id}?category=${formData.category}&days=${formData.days}`,
       );
-
       setData(res.data);
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [user, formData]);
+
   useEffect(() => {
     fetchDashboard();
-  }, []);
+  }, [fetchDashboard]);
 
   return (
     <div className="flex flex-col gap-5">
-      {data?.summery && <Summery refetch={fetchDashboard} summery={data.summery} />}
+      {data?.summery && (
+        <Summery refetch={fetchDashboard} summery={data.summery} />
+      )}
       <Card className="w-full bg-green-50">
         <CardHeader>
           <CardTitle className="font-bold text-2xl text-green-900">

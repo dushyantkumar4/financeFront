@@ -15,7 +15,7 @@ export interface SummeryType {
   refetch: () => void;
 }
 
-const Summery = ({ summery ,refetch}: SummeryType) => {
+const Summery = ({ summery, refetch }: SummeryType) => {
   return (
     <Card className="w-full bg-green-50">
       <CardHeader>
@@ -24,7 +24,7 @@ const Summery = ({ summery ,refetch}: SummeryType) => {
         </CardTitle>
         <CardAction className="">
           <AddFinance
-          refetch={refetch}
+            refetch={refetch}
             mode="add"
             trigger={
               <Button>

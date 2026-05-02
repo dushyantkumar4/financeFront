@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { UsersRound, Eye, Trash2, PencilLine } from "lucide-react";
+import { UsersRound, Eye, Trash2, PencilLine, Smile } from "lucide-react";
 import type { User } from "@/types/user.type";
 import { api } from "@/api/client";
 import {
@@ -65,6 +65,7 @@ const AdminDashboard = () => {
     try {
       await api.delete(`/api/me/${id}`);
       toast.success("User deleted successfully", { position: "top-center" });
+      fetchUsers();
     } catch (err) {
       toast.error("Failed to delete user", { position: "top-center" });
     }
@@ -97,9 +98,20 @@ const AdminDashboard = () => {
                 <TableCell>{item.role}</TableCell>
                 <TableCell>{item.status}</TableCell>
                 <TableCell className="text-right flex items-center justify-end gap-4 ">
-                  <button className="cursor-pointer">
-                    <Eye className="size-4 hover:text-green-600" />
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Eye className="size-4 hover:text-green-600 cursor-pointer" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="bg-green-100">
+                      <AlertDialogTitle className="flex items-center gap-2 text-green-900">
+                        Coming Soon <Smile className="size-5" />
+                      </AlertDialogTitle>
+                      <AlertDialogFooter className="text-black">
+                        <AlertDialogCancel>Ok</AlertDialogCancel>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
                   <HoverCard openDelay={10} closeDelay={100}>
                     <HoverCardTrigger asChild>
                       <PencilLine className="size-4" />
@@ -140,7 +152,7 @@ const AdminDashboard = () => {
                         <AlertDialogCancel>No</AlertDialogCancel>
                         <AlertDialogAction
                           className=""
-                          onClick={() => deleteUser(item._id)}
+                          onClick={() => deleteUser(item._id as string)}
                         >
                           Yes
                         </AlertDialogAction>
