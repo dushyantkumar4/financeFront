@@ -11,10 +11,11 @@ import AddFinance from "./AddFinance";
 import { Button } from "./ui/button";
 import { Plus } from "lucide-react";
 export interface SummeryType {
-    summery:Summary;
+  summery: Summary;
+  refetch: () => void;
 }
 
-const Summery = ({ summery }: SummeryType) => {
+const Summery = ({ summery ,refetch}: SummeryType) => {
   return (
     <Card className="w-full bg-green-50">
       <CardHeader>
@@ -22,7 +23,15 @@ const Summery = ({ summery }: SummeryType) => {
           Summary
         </CardTitle>
         <CardAction className="">
-          <AddFinance mode="add" trigger={<Button>Add <Plus/></Button>}/>
+          <AddFinance
+          refetch={refetch}
+            mode="add"
+            trigger={
+              <Button>
+                Add <Plus />
+              </Button>
+            }
+          />
         </CardAction>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-5">

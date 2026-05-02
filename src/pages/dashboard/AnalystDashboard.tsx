@@ -48,11 +48,11 @@ const AnalystDashboard = () => {
   };
   useEffect(() => {
     fetchDashboard();
-  }, [user]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-5">
-      {data?.summery && <Summery summery={data.summery} />}
+      {data?.summery && <Summery refetch={fetchDashboard} summery={data.summery} />}
       <Card className="w-full bg-green-50">
         <CardHeader>
           <CardTitle className="font-bold text-2xl text-green-900">
@@ -101,7 +101,9 @@ const AnalystDashboard = () => {
           <CategoryTable categoryTotals={data?.categoryTotals ?? []} />
         </CardContent>
       </Card>
-      {data?.recent && <FinanceTable recent={data?.recent ?? []} />}
+      {data?.recent && (
+        <FinanceTable refetch={fetchDashboard} recent={data?.recent ?? []} />
+      )}
     </div>
   );
 };

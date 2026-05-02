@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import { api } from "@/api/client";
 import type { FinanceFormDialogProps } from "@/types/financeFormType";
 
-const AddFinance = ({ mode, initialData, trigger }: FinanceFormDialogProps) => {
+const AddFinance = ({ mode, initialData, trigger,refetch }: FinanceFormDialogProps) => {
   const [formData, setFormData] = useState({
     amount: initialData?.amount ?? 0,
     type: initialData?.type ?? "",
@@ -58,8 +58,9 @@ const AddFinance = ({ mode, initialData, trigger }: FinanceFormDialogProps) => {
       toast.success(
         mode === "add"
           ? "Finance added successfully"
-          : "Finance updated successfully",
+          : "Finance updated successfully",{position:"top-center"}
       );
+      refetch?.();
       setOpen(false);
     } catch (err) {
       const error = err as AxiosError<{ errors?: string }>;

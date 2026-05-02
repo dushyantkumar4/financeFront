@@ -47,6 +47,7 @@ import { toast } from "sonner";
 
 const AdminDashboard = () => {
   const [data, setData] = useState<User[]>([]);
+
   const fetchUsers = useCallback(async () => {
     try {
       const res = await api.get(`/api/users`);
@@ -55,6 +56,7 @@ const AdminDashboard = () => {
       console.error(error);
     }
   }, []);
+
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);

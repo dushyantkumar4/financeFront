@@ -31,6 +31,7 @@ import { useNavigate } from "react-router-dom";
 
 interface RecentProp {
   recent: Transaction[];
+  refetch: () => void;
 }
 interface CategoryProg {
   categoryTotals: CategoryTotal[];
@@ -39,12 +40,13 @@ interface MonthlyProp {
   monthlyTrends: MonthlyTrend[];
 }
 
-export const FinanceTable = ({ recent }: RecentProp) => {
-  const navigate = useNavigate()
+export const FinanceTable = ({ recent,refetch }: RecentProp) => {
+  const navigate = useNavigate();
   const deleteFinance = async (id: string) => {
     try {
       await api.delete(`/api/amount/${id}`);
       toast.success("Deleted successfully", { position: "top-center" });
+      refetch?.();
       navigate("/dashboard");
     } catch (err) {
       toast.error("Failed to delete", { position: "top-center" });
@@ -58,7 +60,7 @@ export const FinanceTable = ({ recent }: RecentProp) => {
           <History />
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="max-h-55 overflow-y-auto">
         <Table className=" rounded-lg text-green-500">
           <TableCaption></TableCaption>
           <TableHeader>
@@ -123,44 +125,48 @@ export const FinanceTable = ({ recent }: RecentProp) => {
 
 export const CategoryTable = ({ categoryTotals }: CategoryProg) => {
   return (
-    <Table className="text-green-500">
-      <TableCaption>Category wise total</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Category</TableHead>
-          <TableHead>Total</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {categoryTotals.map((item) => (
-          <TableRow key={item.category}>
-            <TableCell className="font-medium">{item.category}</TableCell>
-            <TableCell>{item.total}</TableCell>
+    <div className="max-h-50 overflow-y-auto">
+      <Table className="text-green-500">
+        <TableCaption>Category wise total</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Category</TableHead>
+            <TableHead>Total</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {categoryTotals.map((item) => (
+            <TableRow key={item.category}>
+              <TableCell className="font-medium">{item.category}</TableCell>
+              <TableCell>{item.total}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
 export const MonthlyTable = ({ monthlyTrends }: MonthlyProp) => {
   return (
-    <Table className="text-green-500">
-      <TableCaption>Total of this month or given days by you</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Month</TableHead>
-          <TableHead>Total</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {monthlyTrends.map((item) => (
-          <TableRow key={item.month + item.total}>
-            <TableCell className="font-medium">{item.month}</TableCell>
-            <TableCell>{item.total}</TableCell>
+    <div className="max-h-55 overflow-y-auto">
+      <Table className="text-green-500">
+        <TableCaption>Total of this month or given days by you</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Month</TableHead>
+            <TableHead>Total</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {monthlyTrends.map((item) => (
+            <TableRow key={item.month + item.total}>
+              <TableCell className="font-medium">{item.month}</TableCell>
+              <TableCell>{item.total}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };

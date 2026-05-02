@@ -8,6 +8,5 @@ export type FinanceFormDialogProps = {
     date: string;
   };
   trigger: React.ReactNode;
+  refetch: () => void;
 };
-
-
