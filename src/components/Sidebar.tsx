@@ -10,12 +10,12 @@ import {
   SidebarFooter,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { BadgeInfo , LayoutDashboard, CircleUser, LogOut } from "lucide-react";
+import { BadgeInfo, LayoutDashboard, CircleUser, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useMyContext } from "@/hooks/useMyContext";
 
 const AppSidebar = () => {
-  const { logout } = useMyContext();
+  const { logout, user } = useMyContext();
   return (
     <Sidebar collapsible="icon" variant="floating" className="">
       {/* Header */}
@@ -41,7 +41,7 @@ const AppSidebar = () => {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <NavLink to="/about" className="text-green-500">
-                  <BadgeInfo  /> <span>About</span>
+                  <BadgeInfo /> <span>About</span>
                 </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -50,11 +50,16 @@ const AppSidebar = () => {
       </SidebarContent>
       {/* logout  */}
       <SidebarFooter className="bg-green-50 rounded-lg">
-        <SidebarMenuButton asChild>
-          <div className="text-red-500 cursor-pointer" onClick={() => logout()}>
-            <LogOut /> <span>LogOut</span>
-          </div>
-        </SidebarMenuButton>
+        {user && (
+          <SidebarMenuButton asChild>
+            <div
+              className="text-red-500 cursor-pointer"
+              onClick={() => logout()}
+            >
+              <LogOut /> <span>LogOut</span>
+            </div>
+          </SidebarMenuButton>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
